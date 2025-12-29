@@ -103,4 +103,18 @@ router.get('/getarticles', async (req, res) => {
     }
 });
 
+router.get('/getarticlesbyId/:id', async (req, res) => {
+    try {
+        const article = await ArticleModel.findById(req.params.id);
+        
+        if (!article) {
+            return res.status(404).json({ message: "Article not found" });
+        }
+
+        res.json(article);
+    } catch (error) {
+        res.status(500).json({ error: "Invalid ID format or Server Error" });
+    }
+});
+
 export default router;
